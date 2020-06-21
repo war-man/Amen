@@ -1,0 +1,42 @@
+﻿@model DichVuGame.Models.ViewModels.GamesViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<br />
+<div id="home" style="width:100%;background-color:#ffffff">
+    @if (ViewBag.AddToCart != null)
+    {
+        <div id="notification" class="text-success">@ViewBag.AddToCart <span> <button style="background-color: transparent" onclick="CloseNotification()">x</button></span></div> 
+    }
+    <section id="game">
+        <div class="row" style="width:100%">
+            @if (Model.Games != null)
+            {
+            @foreach (var game in Model.Games)
+            {
+                <div class="col-sm-2">
+                    <a asp-area="Customer" asp-controller="Home" asp-action="Details" asp-route-id="@game.ID">
+                        <div class="card">
+                            <img class="card-img" src="@game.GamePoster" />
+                            <label class="card-title">@game.Gamename</label>
+                        </div>
+                    </a>
+                    <p class="card-text">@game.Price đ</p>
+                    <div class="card-footer" style="text-align:center!important">
+                        <a asp-area="Customer" asp-controller="Home" asp-action="AddToCart" asp-route-id="@game.ID"><i class="fas fa-shopping-cart"></i></a>
+                    </div>
+                    <a class="btn btn-outline-primary text-center" asp-area="Customer" asp-controller="Cart" asp-action="Index" asp-route-id="@game.ID">Mua ngay</a>
+                </div>
+            }
+            }
+        </div>
+    </section>
+    <section id="gameaccount">
+    </section>
+</div>
+<script>
+    function CloseNotification() {
+        document.getElementById("notification").hidden = true;
+    }
+</script>
